@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RecommendAJob extends StatefulWidget {
-  const RecommendAJob({Key? key}) : super(key: key);
+class ViewNotes extends StatefulWidget {
+  const ViewNotes({Key? key}) : super(key: key);
   @override
   _RecommendAJobState createState() => _RecommendAJobState();
 }
 
-class _RecommendAJobState extends State<RecommendAJob> {
+class _RecommendAJobState extends State<ViewNotes> {
   TextEditingController jobNameController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   String? selectedShift;
@@ -71,17 +71,18 @@ class _RecommendAJobState extends State<RecommendAJob> {
 
     if (jobName.isNotEmpty && date.isNotEmpty && selectedShift != null) {
       final message = "I'm recommending this job:\nJob Name: $jobName from We Kare Integrated Services\nDate: $date\nShift: $selectedShift";
+      final url = "https://wa.me/?text=${Uri.encodeComponent(message)}";
+      if (await canLaunch(url)) {
+        await launch(url);
 
-      final deepLink = "whatsapp://send?text=${Uri.encodeComponent(message)}";
-
-      if (await canLaunch(deepLink)) {
-        await launch(deepLink);
       } else {
+        // Handle error, e.g., WhatsApp is not installed
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: Unable to open WhatsApp.'),
+          content: Text('Error: WhatsApp not installed or message not sent.'),
         ));
       }
     } else {
+      // Handle input validation, e.g., show an error message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Please fill in all the details.'),
       ));

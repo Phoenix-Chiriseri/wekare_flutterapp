@@ -36,7 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_phone_direct_caller: ^2.0.0
   url_launcher: ^6.0.13
-  sqflite: ^2.0.0
+  sqflite:
+  path:
+  sqflite_common_ffi:
+  path_provider: ^2.0.3
 
 dev_dependencies:
   flutter_test:

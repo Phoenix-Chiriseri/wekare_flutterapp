@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'save_notes.dart';
 import 'recommend_a_friend.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
+  sqfliteFfiInit(); // Initialize sqflite_common_ffi
+  databaseFactory = databaseFactoryFfi;
 }
+
+//Initialize FFI setup
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -42,6 +47,7 @@ class MyHomePage extends StatelessWidget {
               );
             },
           ),
+
           ListTile(
             title: Text('Recommend a Job'),
             onTap: () {
@@ -63,7 +69,7 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final phoneNumber = "0771 255 849"; // Replace with the desired phone number
+          final phoneNumber = "+441525552177"; // Replace with the desired phone number
           FlutterPhoneDirectCaller.callNumber(phoneNumber);
         },
         tooltip: 'Call',
