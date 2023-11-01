@@ -5,7 +5,6 @@ import 'dart:io';
 class SaveNotesOnJob extends StatefulWidget {
   @override
   _SaveDataToInternalStorageState createState() => _SaveDataToInternalStorageState();
-
 }
 
 class _SaveDataToInternalStorageState extends State<SaveNotesOnJob> {
@@ -16,7 +15,7 @@ class _SaveDataToInternalStorageState extends State<SaveNotesOnJob> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Save Data to Internal Storage'),
+        title: Text('Save Notes'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,20 +40,22 @@ class _SaveDataToInternalStorageState extends State<SaveNotesOnJob> {
 
   Future<void> saveData() async {
     final text = textController.text;
-    print(text);
+
     if (text.isNotEmpty) {
       final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/data.txt');
+      final folderName = 'my_notes'; // Change this to the folder name you prefer
 
+      final folder = Directory('${directory.path}/$folderName');
+
+      if (!await folder.exists()) {
+        await folder.create(recursive: true);
+      }
+
+      final file = File('${folder.path}/my_file.txt');
       await file.writeAsString(text);
 
-      setState(() {
-        savedText = text;
-        textController.clear();
-      });
-
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Data saved to internal storage.'),
+        content: Text('Data Saved Successfully in "$folderName" folder.'),
       ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -69,6 +70,7 @@ class _SaveDataToInternalStorageState extends State<SaveNotesOnJob> {
     super.dispose();
   }
 }
+
 
 void main() {
   runApp(MaterialApp(

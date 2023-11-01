@@ -6,9 +6,8 @@ import 'save_notes.dart';
 import 'recommend_a_friend.dart';
 
 void main() async {
+  //FilePicker.platform = FilePicker.platform; // Ensure proper initialization
   runApp(MyApp());
-  sqfliteFfiInit(); // Initialize sqflite_common_ffi
-  databaseFactory = databaseFactoryFfi;
 }
 
 //Initialize FFI setup
@@ -22,15 +21,25 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+
+  final List<String> imageList = [
+    'assets/go.png',
+    'assets/pencil.png',
+    'assets/facebook.png',
+    'assets/facebook.png',
+    // Add more image paths here
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('We Kare Live Job Board'),
       ),
-      body: ListView(
+      body: ListView( // This is the first ListView
         children: <Widget>[
           ListTile(
+            leading: Image.asset('assets/go.png'), // Replace 'your_image.png' with your image path
             title: Text('Navigate to Online Job Board'),
             onTap: () {
               // Add navigation logic to the online job board here
@@ -38,6 +47,7 @@ class MyHomePage extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Image.asset('assets/pencil.png'),
             title: Text('Save Notes on Job'),
             onTap: () {
               // Add logic to save notes on a job here
@@ -47,8 +57,8 @@ class MyHomePage extends StatelessWidget {
               );
             },
           ),
-
           ListTile(
+            leading: Image.asset('assets/facebook.png'),
             title: Text('Recommend a Job'),
             onTap: () {
               // Add logic to recommend a job here
@@ -59,6 +69,7 @@ class MyHomePage extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Image.asset('assets/facebook.png'),
             title: Text('Visit Our Facebook Page'),
             onTap: () {
               // Add logic to open the Facebook page here
