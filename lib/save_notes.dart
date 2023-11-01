@@ -132,6 +132,7 @@ class _SaveNotesOnJobState extends State<SaveNotesOnJob> {
       ScaffoldMessenger.of(context as BuildContext).showSnackBar(SnackBar(
         content: Text('Data saved to the database.'),
       ));
+      print("data saved");
     } else {
       // Handle input validation, e.g., show an error message
       ScaffoldMessenger.of(context as BuildContext).showSnackBar(SnackBar(

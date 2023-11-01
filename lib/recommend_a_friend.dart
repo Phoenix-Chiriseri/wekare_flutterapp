@@ -52,6 +52,12 @@ class _RecommendAJobState extends State<RecommendAJob> {
               },
               child: const Text('Recommend via WhatsApp'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Back'),
+            ),
           ],
         ),
       ),
