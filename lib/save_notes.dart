@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
-class SaveNotesOnJob extends StatefulWidget {
+class SaveNotes extends StatefulWidget {
   @override
-  _SaveDataToInternalStorageState createState() => _SaveDataToInternalStorageState();
+  _SaveNotesState createState() => _SaveNotesState();
 }
 
-class _SaveDataToInternalStorageState extends State<SaveNotesOnJob> {
-  TextEditingController textController = TextEditingController();
-  String savedText = '';
+class _SaveNotesState extends State<SaveNotes> {
+  TextEditingController jobNameController = TextEditingController();
+  TextEditingController jobDateController = TextEditingController();
+  TextEditingController jobNotesController = TextEditingController();
+  String selectedShift = 'Shift 1'; // Initialize with the default value
+  List<String> shiftOptions = ['Morning Shift', 'Early Shift', 'Late Shift','Long Day']; // Define your shift options
 
   @override
   Widget build(BuildContext context) {
@@ -20,60 +21,64 @@ class _SaveDataToInternalStorageState extends State<SaveNotesOnJob> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: [
+          children: <Widget>[
             TextField(
-              controller: textController,
-              decoration: InputDecoration(labelText: 'Enter Text to Save'),
+              controller: jobNameController,
+              decoration: InputDecoration(labelText: 'Job Name'),
+            ),
+            TextField(
+              controller: jobDateController,
+              decoration: InputDecoration(labelText: 'Date'),
+            ),
+            TextField(
+              controller: jobNotesController,
+              decoration: InputDecoration(labelText: 'Notes'),
+            ),
+            DropdownButtonFormField<String?>(
+              value: selectedShift,
+              items: shiftOptions.map((shift) {
+                return DropdownMenuItem<String?>(
+                  value: shift,
+                  child: Text(shift),
+                );
+              }).toList(),
+              onChanged: (String? value) { // Update the parameter type to String?
+                setState(() {
+                  selectedShift = value ?? 'Shift 1'; // Provide a default value if null
+                });
+              },
+              decoration: InputDecoration(labelText: 'Shift'),
             ),
             ElevatedButton(
               onPressed: () {
-                saveData();
+                String name = jobNameController.text;
+                String date = jobDateController.text;
+                String notes = jobNotesController.text;
+
+                if (name.isEmpty || date.isEmpty || notes.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please Don\'t Leave Any Empty Fields')),
+                  );
+                } else {
+                  // Save the notes, you can add your logic here
+                  // For saving data, you can use local storage or network requests.
+                  // Example: saveNotes(name, date, notes, selectedShift);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Notes Saved')),
+                  );
+                }
               },
-              child: Text('Save Data'),
+              child: Text('Save Notes'),
             ),
-            Text('Saved Data: $savedText'),
           ],
         ),
       ),
     );
   }
-
-  Future<void> saveData() async {
-    final text = textController.text;
-
-    if (text.isNotEmpty) {
-      final directory = await getApplicationDocumentsDirectory();
-      final folderName = 'my_notes'; // Change this to the folder name you prefer
-
-      final folder = Directory('${directory.path}/$folderName');
-
-      if (!await folder.exists()) {
-        await folder.create(recursive: true);
-      }
-
-      final file = File('${folder.path}/my_file.txt');
-      await file.writeAsString(text);
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Data Saved Successfully in "$folderName" folder.'),
-      ));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Please enter text to save.'),
-      ));
-    }
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
 }
-
 
 void main() {
   runApp(MaterialApp(
-    home: SaveNotesOnJob(),
+    home: SaveNotes(),
   ));
 }

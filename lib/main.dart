@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:job_board_app/sql_helper.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'save_notes.dart';
@@ -22,19 +23,39 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
 
+  List<Map<String,dynamic>> _journals = [];
+
+  bool _isLoading =  true;
+
+  void _refreshJournal () async{
+
+    final data = await SQlHelper.getItems();
+
+    setState(){
+    _journals = data;
+    _isLoading = false;
+    }
+  }
+
   final List<String> imageList = [
     'assets/go.png',
     'assets/pencil.png',
-    'assets/facebook.png',
+    'assets/quality.png',
     'assets/facebook.png',
     // Add more image paths here
   ];
+
+  void initState(){
+    _refreshJournal();
+    print("number of items ${_journals.length}");
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('We Kare Live Job Board'),
+        backgroundColor: Colors.green,
       ),
       body: ListView( // This is the first ListView
         children: <Widget>[
@@ -58,7 +79,7 @@ class MyHomePage extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Image.asset('assets/facebook.png'),
+            leading: Image.asset('assets/quality.png'),
             title: Text('Recommend a Job'),
             onTap: () {
               // Add logic to recommend a job here
@@ -85,6 +106,7 @@ class MyHomePage extends StatelessWidget {
         },
         tooltip: 'Call',
         child: Icon(Icons.phone),
+        backgroundColor: Colors.green,
       ),
     );
   }

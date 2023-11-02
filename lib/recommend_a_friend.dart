@@ -6,7 +6,6 @@ class RecommendAJob extends StatefulWidget {
   @override
   _RecommendAJobState createState() => _RecommendAJobState();
 }
-
 class _RecommendAJobState extends State<RecommendAJob> {
   TextEditingController jobNameController = TextEditingController();
   TextEditingController dateController = TextEditingController();
