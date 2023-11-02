@@ -47,10 +47,7 @@ class MyHomePage extends StatelessWidget {
             title: 'Save Notes on Job',
             subtitle: 'SAve Quick Notes On Your Phone',
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SaveNotes()),
-              );
+              launch('https://munanacreatives.co.zw/job-board/notes');
             },
           ),
           CustomCard(
