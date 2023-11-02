@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'recommend_a_friend.dart';
 import 'save_notes.dart';
 
-void main() async {
+void main() {
   runApp(MyApp());
 }
 
@@ -16,13 +16,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
   final List<String> imageList = [
     'assets/go.png',
     'assets/pencil.png',
@@ -30,7 +24,6 @@ class _MyHomePageState extends State<MyHomePage> {
     'assets/facebook.png',
     // Add more image paths here
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,26 +31,21 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('We Kare Live Job Board'),
         backgroundColor: Colors.green,
       ),
-      body: ListView( // This is the first ListView
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
         children: <Widget>[
-          ListTile(
-            leading: Image.asset('assets/go.png'),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Add padding to the entire ListTile
-            title: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Navigate to Online Job Board'),
-            ),
+          CustomCard(
+            imageAsset: 'assets/go.png',
+            title: 'Navigate to Online Job Board',
+            subtitle: 'Visit Our Job Board And Easily Apply For A Job',
             onTap: () {
               launch('https://munanacreatives.co.zw/job-board/');
             },
           ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Add padding to the entire ListTile
-            leading: Image.asset('assets/pencil.png'),
-            title: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Save Notes on Job'),
-            ),
+          CustomCard(
+            imageAsset: 'assets/pencil.png',
+            title: 'Save Notes on Job',
+            subtitle: 'SAve Quick Notes On Your Phone',
             onTap: () {
               Navigator.push(
                 context,
@@ -65,13 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
           ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Add padding to the entire ListTile
-            leading: Image.asset('assets/quality.png'),
-            title: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Recommend a Job'),
-            ),
+          CustomCard(
+            imageAsset: 'assets/quality.png',
+            title: 'Recommend a Job',
+            subtitle: 'Recommend A Job To Someone On Whatsapp', // Add the subtitle text
             onTap: () {
               Navigator.push(
                 context,
@@ -79,13 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
           ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Add padding to the entire ListTile
-            leading: Image.asset('assets/facebook.png'),
-            title: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Visit Our Facebook Page'),
-            ),
+          CustomCard(
+            imageAsset: 'assets/facebook.png',
+            title: 'Visit Our Facebook Page',
+            subtitle: 'Visit And Like Our Facebook Page', // A
             onTap: () {
               launch('https://www.facebook.com/people/We-Kare-Intergrated-Services/61551243421157/');
             },
@@ -100,6 +82,35 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Call',
         child: Icon(Icons.phone),
         backgroundColor: Colors.green,
+      ),
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  final String imageAsset;
+  final String title;
+  final VoidCallback onTap;
+
+  CustomCard({
+    required this.imageAsset,
+    required this.title,
+    required this.onTap,
+    required String subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3, // Add elevation for a raised effect
+      margin: EdgeInsets.only(bottom: 16.0), // Add margin between cards
+      child: ListTile(
+        leading: Image.asset(imageAsset),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+        ),
+        onTap: onTap,
       ),
     );
   }

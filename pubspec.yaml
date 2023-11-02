@@ -45,6 +45,7 @@ dependencies:
   file_selector: ^1.0.1
   whatsapp_unilink: ^2.1.0
   contacts_service: ^0.6.3
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

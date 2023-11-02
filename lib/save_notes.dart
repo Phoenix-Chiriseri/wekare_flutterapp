@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SaveNotes extends StatefulWidget {
   @override
   _SaveNotesState createState() => _SaveNotesState();
 }
+
 class _SaveNotesState extends State<SaveNotes> {
   TextEditingController jobNameController = TextEditingController();
   TextEditingController jobDateController = TextEditingController();
@@ -64,6 +69,7 @@ class _SaveNotesState extends State<SaveNotes> {
                     // Save the notes, you can add your logic here
                     // For saving data, you can use local storage or network requests.
                     // Example: saveNotes(name, date, notes, selectedShift);
+                    saveDataToFile(name, date, notes);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Notes Saved')),
                     );
@@ -98,6 +104,37 @@ class _SaveNotesState extends State<SaveNotes> {
     );
   }
 }
+
+Future<void> saveDataToFile(String name, String date, String notes) async {
+  try {
+    // Get the directory for the application's documents directory.
+    final Directory directory = await getApplicationDocumentsDirectory();
+    // Define a file path within the documents directory.
+    final File file = File('${directory.path}/data.txt');
+    // Create and write data to the file.
+    await file.writeAsString('Name: $name\nDate: $date\nNotes: $notes');
+    //Show a success message.
+    Fluttertoast.showToast(
+      msg: "Notes Saved",
+      toastLength: Toast.LENGTH_SHORT, // You can use Toast.LENGTH_LONG for a longer duration
+      gravity: ToastGravity.BOTTOM, // Change to ToastGravity.TOP to display at the top
+      timeInSecForIosWeb: 1, // Only relevant on iOS and web
+      backgroundColor: Colors.black, // Background color of the toast
+      textColor: Colors.white, // Text color of the toast
+    );
+  } catch (e) {
+    // Handle any errors that occur during file I/O.
+    Fluttertoast.showToast(
+      msg: "Unable To Save Notes",
+      toastLength: Toast.LENGTH_SHORT, // You can use Toast.LENGTH_LONG for a longer duration
+      gravity: ToastGravity.BOTTOM, // Change to ToastGravity.TOP to display at the top
+      timeInSecForIosWeb: 1, // Only relevant on iOS and web
+      backgroundColor: Colors.black, // Background color of the toast
+      textColor: Colors.white, // Text color of the toast
+    );
+  }
+}
+
 
 void main() {
   runApp(MaterialApp(

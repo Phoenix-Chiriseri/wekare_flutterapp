@@ -77,6 +77,9 @@ class _RecommendAFriendState extends State<RecommendAFriend> {
                   sendWhatsAppMessage(name, date, selectedShift!);
                 }
               },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green, // Change the background color to green
+              ),
               child: Text('Recommend via WhatsApp'),
             ),
           ],
@@ -89,9 +92,7 @@ class _RecommendAFriendState extends State<RecommendAFriend> {
     String message = "There's a job that I'm recommending you from WeKare Integrated Services requiring $jobName\n"
         "Date for the job is $jobDate\n"
         "The shift is: $selectedShift";
-
     String deepLink = 'https://wa.me/?text=${Uri.encodeComponent(message)}';
-
     if (await canLaunch(deepLink)) {
       await launch(deepLink);
     } else {
