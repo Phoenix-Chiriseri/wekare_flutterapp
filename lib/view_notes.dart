@@ -17,6 +17,7 @@ class _RecommendAJobState extends State<ViewNotes> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recommend A Job'),
+        backgroundColor: Colors.green,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

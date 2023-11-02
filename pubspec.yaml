@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.2.2
   permission_handler: ^11.0.1
   file_selector: ^1.0.1
+  whatsapp_unilink: ^2.1.0
+  contacts_service: ^0.6.3
 
 dev_dependencies:
   flutter_test:
