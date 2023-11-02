@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'recommend_a_friend.dart';
-import 'save_notes.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,8 +21,8 @@ class MyHomePage extends StatelessWidget {
     'assets/pencil.png',
     'assets/quality.png',
     'assets/facebook.png',
-    // Add more image paths here
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +44,7 @@ class MyHomePage extends StatelessWidget {
           CustomCard(
             imageAsset: 'assets/pencil.png',
             title: 'Save Notes on Job',
-            subtitle: 'SAve Quick Notes On Your Phone',
+            subtitle: 'Save Quick Notes On Your Phone',
             onTap: () {
               launch('https://munanacreatives.co.zw/job-board/notes');
             },
@@ -73,7 +72,9 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final phoneNumber = "+441525552177"; // Replace with the desired phone number
+
+          //the phone number to call for enquiries
+          final phoneNumber = "+441525552177";
           FlutterPhoneDirectCaller.callNumber(phoneNumber);
         },
         tooltip: 'Call',
